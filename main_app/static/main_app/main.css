@@ -88,3 +88,9 @@ body {
     justify-content: center;
     align-items: center;
   }
+
+  .navbar-toggler {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+  }
