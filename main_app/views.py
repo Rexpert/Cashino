@@ -5,7 +5,7 @@ from django.http import HttpResponse
 
 
 def home(request):
-    return render(request, "main_app/base.html")
+    return render(request, "main_app/home.html")
 
 
 def transaction(request):
