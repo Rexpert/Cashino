@@ -5,14 +5,14 @@
 <head>
 
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 
     <!-- Bootstrap CSS -->
     <!-- CSS only -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'main_app/main.css' %}">
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css'
+        integrity='sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk' crossorigin='anonymous'>
+    <link rel='stylesheet' type='text/css' href='{% static "main_app/main.css" %}'>
 
     {% if title %}
         <title>Cashino - {{ title }}</title>
@@ -22,32 +22,32 @@
 </head>
 
 <body>
-    <header class="site-header">
-        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-            <div class="container">
-                <a class="navbar-brand mx-auto" href="{% url 'home' %}">Cashino</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
-                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+    <header class='site-header'>
+        <nav class='navbar navbar-expand-md navbar-dark bg-steel fixed-top'>
+            <div class='container'>
+                <a class='navbar-brand mx-auto' href='{% url "home" %}'>Cashino</a>
+                <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarToggle'
+                    aria-controls='navbarToggle' aria-expanded='false' aria-label='Toggle navigation'>
+                    <span class='navbar-toggler-icon'></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarToggle">
-                    <div class="navbar-nav list-group list-group-flush mr-auto">
-                        <a class="nav-item list-group-item nav-link bg-steel centering"
-                            href="{% url 'transaction' %}">Transaction</a>
-                        <a class="nav-item list-group-item nav-link bg-steel centering" href="#">Analytics</a>
-                        <a class="nav-item list-group-item nav-link bg-steel centering" href="#">History</a>
-                        <a class="nav-item list-group-item nav-link bg-steel centering" href="#">Manage Account</a>
-                        <a class="nav-item list-group-item nav-link bg-steel centering" href="#">Setting</a>
-                        <p class="mb-0 centering" style="font-size: 9px; color: #cbd5db; ">&#169; By Rexpert Neoh, 2020
+                <div class='collapse navbar-collapse' id='navbarToggle'>
+                    <div class='navbar-nav list-group list-group-flush mr-auto'>
+                        <a class='nav-item list-group-item nav-link bg-steel centering'
+                            href='{% url "transaction" %}'>Transaction</a>
+                        <a class='nav-item list-group-item nav-link bg-steel centering' href='#'>Analytics</a>
+                        <a class='nav-item list-group-item nav-link bg-steel centering' href='#'>History</a>
+                        <a class='nav-item list-group-item nav-link bg-steel centering' href='#'>Manage Account</a>
+                        <a class='nav-item list-group-item nav-link bg-steel centering' href='#'>Setting</a>
+                        <p class='mb-0 centering' style='font-size: 9px; color: #cbd5db; '>&#169; By Rexpert Neoh, 2020
                         </p>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
-    <main role="main" class="container">
-        <div class="row">
-            <div class="col-md-8">
+    <main role='main' class='container'>
+        <div class='row'>
+            <div class='col-md-8'>
                 {% block content %}{% endblock %}
             </div>
         </div>
@@ -55,15 +55,15 @@
 
     <!-- Optional JavaScript -->
     <!-- JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"></script>
+    <script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'
+        integrity='sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj'
+        crossorigin='anonymous'></script>
+    <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'
+        integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo'
+        crossorigin='anonymous'></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js'
+        integrity='sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI'
+        crossorigin='anonymous'></script>
     {% block script %}{% endblock %}
 </body>
 
