@@ -4,12 +4,12 @@ from django.contrib.auth.models import User
 
 
 class Acct_type(models.Model):
-    users = models.models.ForeignKey("User", on_delete=models.CASCADE)
+    users = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.CharField(max_length=15)
 
 
 class Acct(models.Model):
-    acct_type = models.ForeignKey(Acct_type, on_delete=models.CASCADE)
+    acct_type = models.ForeignKey("Acct_type", on_delete=models.CASCADE)
     name = models.CharField(max_length=15)
     count = models.IntegerField(default=0)
 

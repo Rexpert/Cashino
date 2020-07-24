@@ -38,7 +38,7 @@
                         <a class='nav-item list-group-item nav-link bg-steel centering' href='#'>History</a>
                         <a class='nav-item list-group-item nav-link bg-steel centering' href='#'>Manage Account</a>
                         <a class='nav-item list-group-item nav-link bg-steel centering' href='#'>Setting</a>
-                        <p class='mb-0 centering' style='font-size: 9px; color: #cbd5db; '>&#169; By Rexpert Neoh, 2020
+                        <p class='mb-0 d-block d-sm-none' style='font-size: 9px; color: #cbd5db; text-align: center;'>&#169; By Rexpert Neoh, 2020
                         </p>
                     </div>
                 </div>
@@ -46,11 +46,7 @@
         </nav>
     </header>
     <main role='main' class='container'>
-        <div class='row'>
-            <div class='col-md-8'>
-                {% block content %}{% endblock %}
-            </div>
-        </div>
+        {% block content %}{% endblock %}
     </main>
 
     <!-- Optional JavaScript -->
