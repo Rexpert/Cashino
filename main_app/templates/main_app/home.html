@@ -1,31 +1,97 @@
 {% extends 'main_app/base.html' %}
+{% load static %}
 
 {% block content %}
-    <h1 class="centering mb-3">Sample User</h1>
-    <!-- <h1 class="centering mb-3">{{ user.username }}</h1> -->
-    
-    {% for acct in accts %}
-        <p class="mb-0 mt-2">{{ acct.type }}</p>
-        <ul class="list-group">
-            {% for detail in acct.details %}
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-5 pr-0">
-                        <div style="font-size: 5.5vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ detail.name }}</div>
-                        <p class="my-0" style="font-size: 2.75vw;">Last Update: {{ detail.date }}</p>
-                    </div>
-                    <div class="col-2 px-1 d-flex justify-content-end" style="font-size: 4.5vw; align-items: center;">RM</div>
-                    <div class="col-3 px-0 d-flex justify-content-end" style="font-size: 4.5vw; align-items: center;">{{ detail.bal }}</div>
-                    <div class="col pull-right d-flex justify-content-end" style="align-items: center;"><a href="#">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M11.293 1.293a1 1 0 0 1 1.414 0l2 2a1 1 0 0 1 0 1.414l-9 9a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"/>
-                            <path fill-rule="evenodd" d="M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 0 0 .5.5H4v.5a.5.5 0 0 0 .5.5H5v.5a.5.5 0 0 0 .5.5H6v-1.5a.5.5 0 0 0-.5-.5H5v-.5a.5.5 0 0 0-.5-.5H3z"/>
-                          </svg>
-                    </a></div>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    {% endfor %}
-
+    <h1 class='centering mb-3' style='font-size: 12vw;'>Sample User</h1>
+    <!-- <h1 class='centering mb-3'>{{ user.username }}</h1> -->
+    {% if accts %}
+        {% for acct in accts %}
+            <p class='mb-0 mt-2'>{{ acct.type }}</p>
+            <ul class='list-group'>
+                {% for detail in acct.details %}
+                    <li class='list-group-item'>
+                        <div class='row'>
+                            <div class='col-5 pr-0'>
+                                <div style='font-size: 5.5vw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'>
+                                    {{ detail.name }}</div>
+                                <p class='my-0' style='font-size: 2.75vw;'>Last Update: {{ detail.date }}</p>
+                            </div>
+                            <div class='col-2 px-1 d-flex justify-content-end' style='font-size: 4.5vw; align-items: center;'>RM</div>
+                            <div class='col-3 px-0 d-flex justify-content-end' style='font-size: 4.5vw; align-items: center;'>
+                                {{ detail.bal }}</div>
+                            <div class='col pull-right d-flex justify-content-end' style='align-items: center;'>
+                                <div type='button' data-toggle='modal' data-target='#modal-{{ detail.id }}'>
+                                    <svg width='1em' height='1em' viewBox='0 0 16 16' class='bi bi-pencil' fill='currentColor'
+                                        xmlns='http://www.w3.org/2000/svg'>
+                                        <path fill-rule='evenodd'
+                                            d='M11.293 1.293a1 1 0 0 1 1.414 0l2 2a1 1 0 0 1 0 1.414l-9 9a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z' />
+                                        <path fill-rule='evenodd'
+                                            d='M12.146 6.354l-2.5-2.5.708-.708 2.5 2.5-.707.708zM3 10v.5a.5.5 0 0 0 .5.5H4v.5a.5.5 0 0 0 .5.5H5v.5a.5.5 0 0 0 .5.5H6v-1.5a.5.5 0 0 0-.5-.5H5v-.5a.5.5 0 0 0-.5-.5H3z' />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <form action='{% url "home" %}' method="POST">
+                            {% csrf_token %}
+                            <div class='modal fade' id='modal-{{ detail.id }}' tabindex='-1' role='dialog'aria-labelledby='modal-{{ detail.name }}' aria-hidden='true'>
+                                <div class='modal-dialog-centered modal-dialog' role='document'>
+                                    <div class='modal-content'>
+                                        <div class='modal-header'>
+                                            <h5 class='modal-title'>{{ detail.name }}</h5>
+                                            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                                <span aria-hidden='true'>&times;</span>
+                                            </button>
+                                        </div>
+                                        <input type="hidden" name="id" value="{{ detail.id }}"/>
+                                        <input type="hidden" name="bal" value="{{ detail.bal }}"/>
+                                        <div class='modal-body'>
+                                            <table>
+                                                <tr>
+                                                    <td>Account Name</td>
+                                                    <td>:</td>
+                                                    <td colspan='2'>{{detail.name}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Last Update</td>
+                                                    <td>:</td>
+                                                    <td colspan='2'>{{ detail.date }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Balance</td>
+                                                    <td>:</td>
+                                                    <td>RM</td>
+                                                    <td style='text-align: right;'>{{ detail.bal }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>New Balance</td>
+                                                    <td>:</td>
+                                                    <td>RM</td>
+                                                    <td><input type='number' class='atm' name='atm_new_bal' id='atm_new_bal_{{ detail.id }}' style='text-align: right; max-width: 30vw;' pattern='[0-9]*' step='0.01' placeholder='0.00'></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class='modal-footer'>
+                                            <button type='button' class='btn btn-ouline-secondary' data-dismiss='modal'>Close</button>
+                                            <button type='submit' class='btn btn-secondary' name='btn_save' id='btn_save'>Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% else %}
+        <form action='{% url "transaction" %}'>
+            <p class='centering' style='padding-top: 25vh; font-size: 5vw;'>You have no account in database!</p>
+            <div class='centering'>
+                <button type='submit' class='btn btn-outline-secondary' style='font-size: 5vw;'>Open an account</button>
+            </div>
+        </form>
+    {% endif %}
 {% endblock content %}
+
+{% block script %}
+    <script src='{% static "atm-input/atm-input.js" %}'></script>
+{% endblock script %}
