@@ -55,6 +55,31 @@ accts = [{
     }]
 }]
 
+receives = [{
+    'l1': 'Papa',
+    'l2': ['Pocket Money', 'Angpao']
+}, {
+    'l1': 'Mami',
+    'l2': ['Family Food', 'Housewares', 'Pocket Money']
+}, {
+    'l1': 'Hooi Koon',
+    'l2': ['Pay Back', 'Family Food']
+}]
+
+pays = [{
+    'l1': 'Food',
+    'l2': ['Family Food', 'Breakfast', 'Treats', 'Snacks', 'Lunch', 'Dinner']
+}, {
+    'l1': 'Housewares',
+    'l2': ['Light Bulb', 'Kettle']
+}, {
+    'l1': 'Transport',
+    'l2': ['TNG', 'Bus', 'Parking', 'Petrol']
+}, {
+    'l1': 'Fees',
+    'l2': ['Bank Charge', 'Saman']
+}]
+
 
 def home(request):
     if request.method == 'POST':
@@ -68,4 +93,8 @@ def home(request):
 
 
 def transaction(request):
-    return HttpResponse('Transaction')
+    context = {
+        'receives': receives,
+        'pays': pays,
+    }
+    return render(request, 'main_app/transaction.html', context)

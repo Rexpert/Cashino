@@ -49,7 +49,7 @@ class History(models.Model):
 
 
 class L2_suggestion(models.Model):
-    name = models.CharField(max_length=15)
+    name = models.CharField(max_length=30)
     count = models.IntegerField(default=0)
     l1_suggestion = models.ForeignKey(
         "L1_suggestion", on_delete=models.CASCADE)

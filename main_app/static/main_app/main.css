@@ -94,3 +94,29 @@ body {
     top: 8px;
     right: 16px;
   }
+  
+  .switch {
+    width: 25vw;
+  }
+
+  .switch.active {
+    background-color: #5f788a;
+  }
+
+  .btn {
+    font-size: 5vw;
+    border-width: 0.2vw;
+  }
+
+  .amount {
+    font-size: 4vw; 
+    align-items: center;
+  }
+
+  .input-group-btn {
+    position: static;
+  }
+
+  .typeahead.dropdown-menu {
+    width: 100%;
+  }
