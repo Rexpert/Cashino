@@ -50,6 +50,7 @@
     <script src='{% static "bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.js" %}'></script>
     <script src='{% static "bootstrap-datepicker-1.9.0-dist/js/fix.js" %}'></script>
     <script src='{% static "bootstrap-combobox/js/bootstrap-combobox.js" %}'></script>
+    {{ receives|json_script:"receives" }}
     <script>
         $(document).ready(function(){
             $('.datepicker').datepicker({
@@ -66,7 +67,7 @@
                 clearIfNoMatch: false,
             });
         });
-        var receives = {{ receives|safe }};
+        var receives = JSON.parse(document.getElementById('receives').textContent);
         $('#receive_l1').on("change", function() {
             $('#receive_l2').find('option:not(:first)').remove();
             var l1_val = $(this).val();
