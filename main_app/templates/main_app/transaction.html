@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block content %}
-    <ul class="nav nav-pills mb-3 centering" id="pills-tab" role="tablist">
-        <li class="nav-item mr-3 switch">
+    <ul class="nav nav-pills mb-3 centering d-flex justify-content-between" id="pills-tab" role="tablist">
+        <li class="nav-item switch">
             <a class="nav-link active centering btn btn-outline-secondary" id="pills-receive-tab" data-toggle="pill"
                 href="#pills-receive" role="tab" aria-controls="pills-receive" aria-selected="true">Receive</a>
         </li>
-        <li class="nav-item mr-3 switch">
+        <li class="nav-item switch">
             <a class="nav-link centering btn btn-outline-secondary" id="pills-transfer-tab" data-toggle="pill"
                 href="#pills-transfer" role="tab" aria-controls="pills-transfer" aria-selected="false">Transfer</a>
         </li>
@@ -19,11 +19,11 @@
     <div class="tab-content" id="pills-tabContent">
         <form class="tab-pane fade show active" id="pills-receive" role="tabpanel" aria-labelledby="pills-receive-tab">
             <div class="form-group">
-                <label for="receive_date_input">Since When</label>
-                <input class="form-control datepicker" name="receive_date_input" id="receive_date_input" type="text" readonly>
+                <label for="receive_date_input">Since When?</label>
+                <input class="form-control datepicker" name="receive_date_input" id="receive_date_input" type="text" style='text-align: center;' readonly>
             </div>
             <div class="form-group">
-                <label for="receive_l1">From Who</label>
+                <label for="receive_l1">From Who?</label>
                 <select class="combobox input-large form-control" name="receive_l1" id="receive_l1">
                     <option value selected>Who give you money?</option>
                     {% for receive in receives %}
@@ -43,17 +43,20 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="receive_l2">For What</label>
+                <label for="receive_l2">For What?</label>
                 <select class="combobox input-large form-control" name="receive_l2" id="receive_l2">
                     <option value selected>Purpose of the money?</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="receive_amount_atm">For What</label>
-                <input class='atm input-large form-control' name='receive_amount_atm' id='receive_amount_atm' type='number' pattern='[0-9]*' step='0.01' placeholder='0.00' style='text-align: right; max-width: 33vw;' required>
+                <label for="receive_amount_atm">How Much?</label>
+                <div class="row mx-0">
+                    <p class="col-form-label pr-3">RM</p>
+                    <input class='atm form-control col' name='receive_amount_atm' id='receive_amount_atm' type='number' pattern='[0-9]*' step='0.01' placeholder='0.00' style='text-align: right;' required>
+                </div>
             </div>
-            <footer>
-                <button class="btn btn-outline-secondary switch"><a href='{% url "home" %}'>Cancel</a></button>
+            <footer class="d-flex justify-content-between">
+                <button class="btn btn-outline-secondary switch"><a href='{% url "home" %}' style="color:inherit">Cancel</a></button>
                 <button class="btn btn-outline-secondary switch active" type="submit" >Receive</button>
             </footer>
         </form>
@@ -68,6 +71,7 @@
     <script src='{% static "bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.js" %}'></script>
     <script src='{% static "bootstrap-datepicker-1.9.0-dist/js/fix.js" %}'></script>
     <script src='{% static "bootstrap-combobox/js/bootstrap-combobox.js" %}'></script>
+    <script src='{% static "atm-input/atm-input.js" %}'></script>
     {{ receives|json_script:"receives" }}
     <script>
         $(document).ready(function(){
@@ -84,15 +88,21 @@
                 appendId: '_input',
                 clearIfNoMatch: false,
             });
+            // Avoid bootstrap combobox setAttribute bug when user first click #receive_l2_input without choosing #receive_l1 or input #receive_l1_input by typing
+            $('#receive_l2_input').siblings(".input-group-append").prop("disabled", true);
         });
         var receives = JSON.parse(document.getElementById('receives').textContent);
         $('#receive_l1').on("change", function() {
             $('#receive_l2').find('option:not(:first)').remove();
             var l1_val = $(this).val();
             var l2_val = $('#receive_l2_input').val();
-            if (l1_val == "" && l2_val != "") {
-                $('#receive_l2_input').siblings(".input-group-append").children('.dropdown-toggle').click();
+            if (l1_val == "") {
+                if (l2_val != "") {
+                    $('#receive_l2_input').siblings(".input-group-append").children('.dropdown-toggle').click();
+                }
+                $('#receive_l2_input').siblings(".input-group-append").prop("disabled", true);
             } else {
+                $('#receive_l2_input').siblings(".input-group-append").prop("disabled", false);
                 for (i=0; i<receives.length; i++) {
                     if (receives[i]['l1'] == l1_val) {
                         for (j=0; j<receives[i]['l2'].length; j++) {
