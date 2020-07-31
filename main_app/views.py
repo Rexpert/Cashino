@@ -94,6 +94,7 @@ def home(request):
 
 def transaction(request):
     context = {
+        'accts': accts,
         'receives': receives,
         'pays': pays,
     }
