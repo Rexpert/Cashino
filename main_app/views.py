@@ -110,5 +110,11 @@ def transaction(request):
             print('from which: ', request.POST.get('transfer_from_accts'))
             print('to which: ', request.POST.get('transfer_to_accts'))
             print('how much: ', request.POST.get('transfer_amount_atm'))
+        elif 'pay_btn' in request.POST:
+            print('date: ', request.POST.get('pay_date_input'))
+            print('from which: ', request.POST.get('pay_accts'))
+            print('category: ', request.POST.get('pay_l1'))
+            print('subcategory: ', request.POST.get('pay_l2'))
+            print('how much: ', request.POST.get('pay_amount_atm'))
         return redirect('home')
     return render(request, 'main_app/transaction.html', context)
