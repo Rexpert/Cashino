@@ -2,83 +2,130 @@
 {% load static %}
 
 {% block content %}
-    <ul class="nav nav-pills mb-3 centering d-flex justify-content-between" id="pills-tab" role="tablist">
-        <li class="nav-item switch">
-            <a class="nav-link active centering btn btn-outline-secondary" id="pills-receive-tab" data-toggle="pill"
-                href="#pills-receive" role="tab" aria-controls="pills-receive" aria-selected="true">Receive</a>
+    <ul class='nav nav-pills mb-3 centering d-flex justify-content-between' id='pills-tab' role='tablist'>
+        <li class='nav-item switch'>
+            <a class='nav-link active centering btn btn-outline-secondary' id='pills-receive-tab' data-toggle='pill'
+                href='#pills-receive' role='tab' aria-controls='pills-receive' aria-selected='true'>Receive</a>
         </li>
-        <li class="nav-item switch">
-            <a class="nav-link centering btn btn-outline-secondary" id="pills-transfer-tab" data-toggle="pill"
-                href="#pills-transfer" role="tab" aria-controls="pills-transfer" aria-selected="false">Transfer</a>
+        <li class='nav-item switch'>
+            <a class='nav-link centering btn btn-outline-secondary' id='pills-transfer-tab' data-toggle='pill'
+                href='#pills-transfer' role='tab' aria-controls='pills-transfer' aria-selected='false'>Transfer</a>
         </li>
-        <li class="nav-item switch">
-            <a class="nav-link centering btn btn-outline-secondary" id="pills-pay-tab" data-toggle="pill" href="#pills-pay"
-                role="tab" aria-controls="pills-pay" aria-selected="false">Pay</a>
+        <li class='nav-item switch'>
+            <a class='nav-link centering btn btn-outline-secondary' id='pills-pay-tab' data-toggle='pill' href='#pills-pay'
+                role='tab' aria-controls='pills-pay' aria-selected='false'>Pay</a>
         </li>
     </ul>
-    <div class="tab-content" id="pills-tabContent">
-        <form class="tab-pane fade show active" id="pills-receive" role="tabpanel" aria-labelledby="pills-receive-tab">
-            <div class="form-group">
-                <label for="receive_date_input">Since When?</label>
-                <input class="form-control datepicker" name="receive_date_input" id="receive_date_input" type="text" style='text-align: center;' readonly>
+    <div class='tab-content' id='pills-tabContent'>
+        <form class='tab-pane fade show active' id='pills-receive' role='tabpanel' aria-labelledby='pills-receive-tab' method="POST">
+            {% csrf_token %}
+            <div class='form-group'>
+                <label for='receive_date_input'>Since When?</label>
+                <input class='form-control datepicker' name='receive_date_input' id='receive_date_input' type='text'
+                    style='text-align: center;' readonly>
             </div>
-            <div class="form-group">
-                <label for="receive_l1">From Who?</label>
-                <select class="combobox input-large form-control" name="receive_l1" id="receive_l1">
+            <div class='form-group'>
+                <label for='receive_l1'>From Who?</label>
+                <select class='combobox input-large form-control' name='receive_l1' id='receive_l1' required>
                     <option value selected>Who give you money?</option>
                     {% for receive in receives %}
-                        <option value='{{ receive.l1 }}' >{{ receive.l1 }}</option>
+                        <option value='{{ receive.l1 }}'>{{ receive.l1 }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <div class="form-group">
-                <label for="receive_l2">To Which?</label>
-                <select class="input-large form-control" name="receive_accts" id="receive_accts">
+            <div class='form-group'>
+                <label for='receive_accts'>To Which?</label>
+                <select class='input-large form-control' name='receive_accts' id='receive_accts' required>
                     <option value disabled selected>Which account?</option>
                     {% for acct in accts %}
                         {% for detail in acct.details %}
-                            <option value='{{ detail.name }}' >{{ detail.name }}</option>
+                            <option value='{{ detail.name }}'>{{ detail.name }}</option>
                         {% endfor %}
                     {% endfor %}
                 </select>
             </div>
-            <div class="form-group">
-                <label for="receive_l2">For What?</label>
-                <select class="combobox input-large form-control" name="receive_l2" id="receive_l2">
+            <div class='form-group'>
+                <label for='receive_l2'>For What?</label>
+                <select class='combobox input-large form-control' name='receive_l2' id='receive_l2' required>
                     <option value selected>Purpose of the money?</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="receive_amount_atm">How Much?</label>
-                <div class="row mx-0">
-                    <p class="col-form-label pr-3">RM</p>
-                    <input class='atm form-control col' name='receive_amount_atm' id='receive_amount_atm' type='number' pattern='[0-9]*' step='0.01' placeholder='0.00' style='text-align: right;' required>
+            <div class='form-group'>
+                <label for='receive_amount_atm'>How Much?</label>
+                <div class='row mx-0'>
+                    <p class='col-form-label pr-3'>RM</p>
+                    <input class='atm form-control col' name='receive_amount_atm' id='receive_amount_atm' type='number'
+                        pattern='[0-9]*' step='0.01' placeholder='0.00' style='text-align: right;' required>
                 </div>
             </div>
-            <footer class="d-flex justify-content-between">
-                <button class="btn btn-outline-secondary switch"><a href='{% url "home" %}' style="color:inherit">Cancel</a></button>
-                <button class="btn btn-outline-secondary switch active" type="submit" >Receive</button>
+            <footer class='d-flex justify-content-between'>
+                <button class='btn btn-outline-secondary switch'><a href='{% url "home" %}'
+                        style='color:inherit'>Cancel</a></button>
+                <button class='btn btn-outline-secondary switch active' name="receive_btn" id="receive_btn" type='submit'>Receive</button>
             </footer>
         </form>
-        <form class="tab-pane fade" id="pills-transfer" role="tabpanel" aria-labelledby="pills-transfer-tab">...</form>
-        <form class="tab-pane fade" id="pills-pay" role="tabpanel" aria-labelledby="pills-pay-tab">...</form>
+        <form class='tab-pane fade' id='pills-transfer' role='tabpanel' aria-labelledby='pills-transfer-tab' method="POST">
+            {% csrf_token %}
+            <div class='form-group'>
+                <label for='transfer_date_input'>Since When?</label>
+                <input class='form-control datepicker' name='transfer_date_input' id='transfer_date_input' type='text'
+                    style='text-align: center;' readonly>
+            </div>
+            <div class='form-group'>
+                <label for='transfer_from_accts'>From Which?</label>
+                <select class='input-large form-control' name='transfer_from_accts' id='transfer_from_accts' required>
+                    <option value disabled selected>Which account?</option>
+                    {% for acct in accts %}
+                        {% for detail in acct.details %}
+                            <option value='{{ detail.name }}'>{{ detail.name }}</option>
+                        {% endfor %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class='form-group'>
+                <label for='transfer_to_accts'>To Which?</label>
+                <select class='input-large form-control' name='transfer_to_accts' id='transfer_to_accts' required>
+                    <option value disabled selected>Which account?</option>
+                    {% for acct in accts %}
+                        {% for detail in acct.details %}
+                            <option value='{{ detail.name }}'>{{ detail.name }}</option>
+                        {% endfor %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class='form-group'>
+                <label for='transfer_amount_atm'>How Much?</label>
+                <div class='row mx-0'>
+                    <p class='col-form-label pr-3'>RM</p>
+                    <input class='atm form-control col' name='transfer_amount_atm' id='transfer_amount_atm' type='number'
+                        pattern='[0-9]*' step='0.01' placeholder='0.00' style='text-align: right;' required>
+                </div>
+            </div>
+            <footer class='d-flex justify-content-between'>
+                <button class='btn btn-outline-secondary switch'><a href='{% url "home" %}'
+                        style='color:inherit'>Cancel</a></button>
+                <button class='btn btn-outline-secondary switch active' name="transfer_btn" id="transfer_btn" type='submit'>Transfer</button>
+            </footer>
+        </form>
+        <form class='tab-pane fade' id='pills-pay' role='tabpanel' aria-labelledby='pills-pay-tab'>...</form>
     </div>
 {% endblock content %}
 
 {% block script %}
-    <link rel='stylesheet' type='text/css' href='{% static "bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker.css" %}'>
+    <link rel='stylesheet' type='text/css'
+        href='{% static "bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker.css" %}'>
     <link rel='stylesheet' type='text/css' href='{% static "bootstrap-combobox/css/bootstrap-combobox.css" %}'>
     <script src='{% static "bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.js" %}'></script>
     <script src='{% static "bootstrap-datepicker-1.9.0-dist/js/fix.js" %}'></script>
     <script src='{% static "bootstrap-combobox/js/bootstrap-combobox.js" %}'></script>
     <script src='{% static "atm-input/atm-input.js" %}'></script>
-    {{ receives|json_script:"receives" }}
+    {{ receives|json_script:'receives' }}
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('.datepicker').datepicker({
-                format: "dd M yyyy",
+                format: 'dd M yyyy',
                 weekStart: 1,
-                daysOfWeekHighlighted: "0,6",
+                daysOfWeekHighlighted: '0,6',
                 autoclose: true,
                 todayHighlight: true
             });
@@ -89,23 +136,23 @@
                 clearIfNoMatch: false,
             });
             // Avoid bootstrap combobox setAttribute bug when user first click #receive_l2_input without choosing #receive_l1 or input #receive_l1_input by typing
-            $('#receive_l2_input').siblings(".input-group-append").prop("disabled", true);
+            $('#receive_l2_input').siblings('.input-group-append').prop('disabled', true);
         });
         var receives = JSON.parse(document.getElementById('receives').textContent);
-        $('#receive_l1').on("change", function() {
+        $('#receive_l1').on('change', function () {
             $('#receive_l2').find('option:not(:first)').remove();
             var l1_val = $(this).val();
             var l2_val = $('#receive_l2_input').val();
-            if (l1_val == "") {
-                if (l2_val != "") {
-                    $('#receive_l2_input').siblings(".input-group-append").children('.dropdown-toggle').click();
+            if (l1_val == '') {
+                if (l2_val != '') {
+                    $('#receive_l2_input').siblings('.input-group-append').children('.dropdown-toggle').click();
                 }
-                $('#receive_l2_input').siblings(".input-group-append").prop("disabled", true);
+                $('#receive_l2_input').siblings('.input-group-append').prop('disabled', true);
             } else {
-                $('#receive_l2_input').siblings(".input-group-append").prop("disabled", false);
-                for (i=0; i<receives.length; i++) {
+                $('#receive_l2_input').siblings('.input-group-append').prop('disabled', false);
+                for (i = 0; i < receives.length; i++) {
                     if (receives[i]['l1'] == l1_val) {
-                        for (j=0; j<receives[i]['l2'].length; j++) {
+                        for (j = 0; j < receives[i]['l2'].length; j++) {
                             $('#receive_l2').append($('<option>', {
                                 value: receives[i]['l2'][j],
                                 text: receives[i]['l2'][j],
@@ -114,7 +161,21 @@
                     }
                 }
             }
-            $("#receive_l2").data('combobox').refresh();
+            $('#receive_l2').data('combobox').refresh();
         });
+        $('#transfer_from_accts').on('change', function() {
+            $('#transfer_to_accts').find('option:not(:first)').prop('disabled', false);
+            var from = $(this).val();
+            $('#transfer_to_accts option').filter(function(){
+                return this.value == from;
+            }).prop("disabled", true);
+        })
+        $('#transfer_to_accts').on('change', function() {
+            $('#transfer_from_accts').find('option:not(:first)').prop('disabled', false);
+            var from = $(this).val();
+            $('#transfer_from_accts option').filter(function(){
+                return this.value == from;
+            }).prop("disabled", true);
+        })
     </script>
 {% endblock script %}

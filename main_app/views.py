@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 # Create your views here.
@@ -98,4 +98,17 @@ def transaction(request):
         'receives': receives,
         'pays': pays,
     }
+    if request.method == 'POST':
+        if 'receive_btn' in request.POST:
+            print('date: ', request.POST.get('receive_date_input'))
+            print('from who: ', request.POST.get('receive_l1'))
+            print('to which: ', request.POST.get('receive_accts'))
+            print('for what: ', request.POST.get('receive_l2'))
+            print('how much: ', request.POST.get('receive_amount_atm'))
+        elif 'transfer_btn' in request.POST:
+            print('date: ', request.POST.get('transfer_date_input'))
+            print('from which: ', request.POST.get('transfer_from_accts'))
+            print('to which: ', request.POST.get('transfer_to_accts'))
+            print('how much: ', request.POST.get('transfer_amount_atm'))
+        return redirect('home')
     return render(request, 'main_app/transaction.html', context)
