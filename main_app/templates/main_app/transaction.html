@@ -36,7 +36,7 @@
             </div>
             <div class='form-group'>
                 <label for='receive_accts'>To Which?</label>
-                <select class='input-large form-control' name='receive_accts' id='receive_accts' required>
+                <select class='input-large form-control' name='receive_accts' id='receive_accts'>
                     <option value disabled selected>Which account?</option>
                     {% for acct in accts %}
                         {% for detail in acct.details %}
@@ -57,7 +57,7 @@
                 <div class='row mx-0'>
                     <p class='col-form-label pr-3'>RM</p>
                     <input class='atm form-control col' name='receive_amount_atm' id='receive_amount_atm' type='number'
-                        pattern='[0-9]*' step='0.01' placeholder='0.00' style='text-align: right;' required>
+                        pattern='[0-9]*' step='0.01' placeholder='0.00' style='text-align: right;'>
                 </div>
             </div>
             <footer class='d-flex justify-content-between'>
@@ -75,7 +75,7 @@
             </div>
             <div class='form-group'>
                 <label for='transfer_from_accts'>From Which?</label>
-                <select class='input-large form-control' name='transfer_from_accts' id='transfer_from_accts' required>
+                <select class='input-large form-control' name='transfer_from_accts' id='transfer_from_accts'>
                     <option value disabled selected>Which account?</option>
                     {% for acct in accts %}
                         {% for detail in acct.details %}
@@ -86,7 +86,7 @@
             </div>
             <div class='form-group'>
                 <label for='transfer_to_accts'>To Which?</label>
-                <select class='input-large form-control' name='transfer_to_accts' id='transfer_to_accts' required>
+                <select class='input-large form-control' name='transfer_to_accts' id='transfer_to_accts'>
                     <option value disabled selected>Which account?</option>
                     {% for acct in accts %}
                         {% for detail in acct.details %}
@@ -100,7 +100,7 @@
                 <div class='row mx-0'>
                     <p class='col-form-label pr-3'>RM</p>
                     <input class='atm form-control col' name='transfer_amount_atm' id='transfer_amount_atm' type='number'
-                        pattern='[0-9]*' step='0.01' placeholder='0.00' style='text-align: right;' required>
+                        pattern='[0-9]*' step='0.01' placeholder='0.00' style='text-align: right;'>
                 </div>
             </div>
             <footer class='d-flex justify-content-between'>
@@ -118,7 +118,7 @@
             </div>
             <div class='form-group'>
                 <label for='pay_accts'>From Which?</label>
-                <select class='input-large form-control' name='pay_accts' id='pay_accts' required>
+                <select class='input-large form-control' name='pay_accts' id='pay_accts'>
                     <option value disabled selected>Which account?</option>
                     {% for acct in accts %}
                         {% for detail in acct.details %}
@@ -149,7 +149,7 @@
                 <div class='row mx-0'>
                     <p class='col-form-label pr-3'>RM</p>
                     <input class='atm form-control col' name='pay_amount_atm' id='pay_amount_atm' type='number'
-                        pattern='[0-9]*' step='0.01' placeholder='0.00' style='text-align: right;' required>
+                        pattern='[0-9]*' step='0.01' placeholder='0.00' style='text-align: right;'>
                 </div>
             </div>
             <footer class='d-flex justify-content-between'>
@@ -190,105 +190,8 @@
             $('#receive_l2_input').siblings('.input-group-append').prop('disabled', true);
             $('#pay_l2_input').siblings('.input-group-append').prop('disabled', true);
         });
-        var receives = JSON.parse(document.getElementById('receives').textContent);
-        $('#receive_l1').on('change', function () {
-            $('#receive_l2').find('option:not(:first)').remove();
-            var l1_val = $(this).val();
-            var l2_val = $('#receive_l2_input').val();
-            if (l1_val == '') {
-                if (l2_val != '') {
-                    $('#receive_l2_input').siblings('.input-group-append').children('.dropdown-toggle').click();
-                }
-                $('#receive_l2_input').siblings('.input-group-append').prop('disabled', true);
-            } else {
-                $('#receive_l2_input').siblings('.input-group-append').prop('disabled', false);
-                for (i = 0; i < receives.length; i++) {
-                    if (receives[i]['l1'] == l1_val) {
-                        for (j = 0; j < receives[i]['l2'].length; j++) {
-                            $('#receive_l2').append($('<option>', {
-                                value: receives[i]['l2'][j],
-                                text: receives[i]['l2'][j],
-                            }));
-                        }
-                    }
-                }
-            }
-            $('#receive_l2').data('combobox').refresh();
-        });
-        var pays = JSON.parse(document.getElementById('pays').textContent);
-        $('#pay_l1').on('change', function () {
-            $('#pay_l2').find('option:not(:first)').remove();
-            var l1_val = $(this).val();
-            var l2_val = $('#pay_l2_input').val();
-            if (l1_val == '') {
-                if (l2_val != '') {
-                    $('#pay_l2_input').siblings('.input-group-append').children('.dropdown-toggle').click();
-                }
-                $('#pay_l2_input').siblings('.input-group-append').prop('disabled', true);
-            } else {
-                $('#pay_l2_input').siblings('.input-group-append').prop('disabled', false);
-                for (i = 0; i < pays.length; i++) {
-                    if (pays[i]['l1'] == l1_val) {
-                        for (j = 0; j < pays[i]['l2'].length; j++) {
-                            $('#pay_l2').append($('<option>', {
-                                value: pays[i]['l2'][j],
-                                text: pays[i]['l2'][j],
-                            }));
-                        }
-                    }
-                }
-            }
-            $('#pay_l2').data('combobox').refresh();
-        });
-        $('#transfer_from_accts').on('change', function() {
-            $('#transfer_to_accts').find('option:not(:first)').prop('disabled', false);
-            var from = $(this).val();
-            $('#transfer_to_accts option').filter(function(){
-                return this.value == from;
-            }).prop("disabled", true);
-        })
-        $('#transfer_to_accts').on('change', function() {
-            $('#transfer_from_accts').find('option:not(:first)').prop('disabled', false);
-            var from = $(this).val();
-            $('#transfer_from_accts option').filter(function(){
-                return this.value == from;
-            }).prop("disabled", true);
-        })
-        $('#receive_btn').on('click', function(e){
-            if($('#receive_l1_input').val() == "") {
-                e.preventDefault();
-                $('#receive_l1_input').addClass('is-invalid');
-            } else {
-                $('#receive_l1_input').removeClass('is-invalid');
-            }
-            if($('#receive_l2_input').val() == "") {
-                e.preventDefault();
-                $('#receive_l2_input').addClass('is-invalid');
-            } else {
-                $('#receive_l2_input').removeClass('is-invalid');
-            }
-        })
-        $('#pay_btn').on('click', function(e){
-            if($('#pay_l1_input').val() == "") {
-                e.preventDefault();
-                $('#pay_l1_input').addClass('is-invalid');
-            } else {
-                $('#pay_l1_input').removeClass('is-invalid');
-            }
-            if($('#pay_l2_input').val() == "") {
-                e.preventDefault();
-                $('#pay_l2_input').addClass('is-invalid');
-            } else {
-                $('#pay_l2_input').removeClass('is-invalid');
-            }
-        })
-        $('#pills-receive').on('submit', function() {
-            $('#receive_l1_hidden').val($('#receive_l1_input').val());
-            $('#receive_l2_hidden').val($('#receive_l2_input').val());
-        });
-        $('#pills-pay').on('submit', function() {
-            $('#pay_l1_hidden').val($('#pay_l1_input').val());
-            $('#pay_l2_hidden').val($('#pay_l2_input').val());
-        });
     </script>
+    <script src='{% static "main_app/js/transactionLinkedCombobox.js" %}'></script>
+    <script src='{% static "main_app/js/transactionAppendOptions.js" %}'></script>
+    <script src='{% static "main_app/js/transactionValidation.js" %}'></script>
 {% endblock script %}

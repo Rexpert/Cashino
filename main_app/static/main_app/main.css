@@ -120,3 +120,9 @@ body {
   .typeahead.dropdown-menu {
     width: 100%;
   }
+
+  select { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }

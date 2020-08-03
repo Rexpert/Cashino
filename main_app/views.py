@@ -116,7 +116,6 @@ def transaction(request):
             print('category: ', request.POST.get('pay_l1_hidden'))
             print('subcategory: ', request.POST.get('pay_l2_hidden'))
             print('how much: ', request.POST.get('pay_amount_atm'))
-        # cant get self type input from receive_l1
-        print(request.POST.dict())
+        # print(request.POST.dict())
         return redirect('home')
     return render(request, 'main_app/transaction.html', context)
