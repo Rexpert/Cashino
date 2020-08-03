@@ -101,9 +101,9 @@ def transaction(request):
     if request.method == 'POST':
         if 'receive_btn' in request.POST:
             print('date: ', request.POST.get('receive_date_input'))
-            print('from who: ', request.POST.get('receive_l1'))
+            print('from who: ', request.POST.get('receive_l1_hidden'))
             print('to which: ', request.POST.get('receive_accts'))
-            print('for what: ', request.POST.get('receive_l2'))
+            print('for what: ', request.POST.get('receive_l2_hidden'))
             print('how much: ', request.POST.get('receive_amount_atm'))
         elif 'transfer_btn' in request.POST:
             print('date: ', request.POST.get('transfer_date_input'))
@@ -113,8 +113,10 @@ def transaction(request):
         elif 'pay_btn' in request.POST:
             print('date: ', request.POST.get('pay_date_input'))
             print('from which: ', request.POST.get('pay_accts'))
-            print('category: ', request.POST.get('pay_l1'))
-            print('subcategory: ', request.POST.get('pay_l2'))
+            print('category: ', request.POST.get('pay_l1_hidden'))
+            print('subcategory: ', request.POST.get('pay_l2_hidden'))
             print('how much: ', request.POST.get('pay_amount_atm'))
+        # cant get self type input from receive_l1
+        print(request.POST.dict())
         return redirect('home')
     return render(request, 'main_app/transaction.html', context)

@@ -26,12 +26,13 @@
             </div>
             <div class='form-group'>
                 <label for='receive_l1'>From Who?</label>
-                <select class='combobox input-large form-control' name='receive_l1' id='receive_l1' required>
+                <select class='combobox input-large form-control' name='receive_l1' id='receive_l1'>
                     <option value selected>Who give you money?</option>
                     {% for receive in receives %}
                         <option value='{{ receive.l1 }}'>{{ receive.l1 }}</option>
                     {% endfor %}
                 </select>
+                <input type='hidden' name='receive_l1_hidden' id='receive_l1_hidden' value>
             </div>
             <div class='form-group'>
                 <label for='receive_accts'>To Which?</label>
@@ -46,9 +47,10 @@
             </div>
             <div class='form-group'>
                 <label for='receive_l2'>For What?</label>
-                <select class='combobox input-large form-control' name='receive_l2' id='receive_l2' required>
+                <select class='combobox input-large form-control' name='receive_l2' id='receive_l2'>
                     <option value selected>Purpose of the money?</option>
                 </select>
+                <input type='hidden' name='receive_l2_hidden' id='receive_l2_hidden' value>
             </div>
             <div class='form-group'>
                 <label for='receive_amount_atm'>How Much?</label>
@@ -127,18 +129,20 @@
             </div>
             <div class='form-group'>
                 <label for='pay_l1'>Category</label>
-                <select class='combobox input-large form-control' name='pay_l1' id='pay_l1' required>
+                <select class='combobox input-large form-control' name='pay_l1' id='pay_l1'>
                     <option value selected>Which Category?</option>
                     {% for pay in pays %}
                         <option value='{{ pay.l1 }}'>{{ pay.l1 }}</option>
                     {% endfor %}
                 </select>
+                <input type='hidden' name='pay_l1_hidden' id='pay_l1_hidden' value>
             </div>
             <div class='form-group'>
                 <label for='pay_l2'>Subcategory</label>
-                <select class='combobox input-large form-control' name='pay_l2' id='pay_l2' required>
+                <select class='combobox input-large form-control' name='pay_l2' id='pay_l2'>
                     <option value selected>Detail?</option>
                 </select>
+                <input type='hidden' name='pay_l2_hidden' id='pay_l2_hidden' value>
             </div>
             <div class='form-group'>
                 <label for='pay_amount_atm'>How Much?</label>
@@ -184,6 +188,7 @@
             });
             // Avoid bootstrap combobox setAttribute bug when user first click #receive_l2_input without choosing #receive_l1 or input #receive_l1_input by typing
             $('#receive_l2_input').siblings('.input-group-append').prop('disabled', true);
+            $('#pay_l2_input').siblings('.input-group-append').prop('disabled', true);
         });
         var receives = JSON.parse(document.getElementById('receives').textContent);
         $('#receive_l1').on('change', function () {
@@ -249,5 +254,41 @@
                 return this.value == from;
             }).prop("disabled", true);
         })
+        $('#receive_btn').on('click', function(e){
+            if($('#receive_l1_input').val() == "") {
+                e.preventDefault();
+                $('#receive_l1_input').addClass('is-invalid');
+            } else {
+                $('#receive_l1_input').removeClass('is-invalid');
+            }
+            if($('#receive_l2_input').val() == "") {
+                e.preventDefault();
+                $('#receive_l2_input').addClass('is-invalid');
+            } else {
+                $('#receive_l2_input').removeClass('is-invalid');
+            }
+        })
+        $('#pay_btn').on('click', function(e){
+            if($('#pay_l1_input').val() == "") {
+                e.preventDefault();
+                $('#pay_l1_input').addClass('is-invalid');
+            } else {
+                $('#pay_l1_input').removeClass('is-invalid');
+            }
+            if($('#pay_l2_input').val() == "") {
+                e.preventDefault();
+                $('#pay_l2_input').addClass('is-invalid');
+            } else {
+                $('#pay_l2_input').removeClass('is-invalid');
+            }
+        })
+        $('#pills-receive').on('submit', function() {
+            $('#receive_l1_hidden').val($('#receive_l1_input').val());
+            $('#receive_l2_hidden').val($('#receive_l2_input').val());
+        });
+        $('#pills-pay').on('submit', function() {
+            $('#pay_l1_hidden').val($('#pay_l1_input').val());
+            $('#pay_l2_hidden').val($('#pay_l2_input').val());
+        });
     </script>
 {% endblock script %}
